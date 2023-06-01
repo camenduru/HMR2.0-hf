@@ -1,8 +1,8 @@
 ---
-title: HMR
-emoji: 📈
-colorFrom: indigo
-colorTo: pink
+title: HMR2.0
+emoji: 🔥
+colorFrom: yellow
+colorTo: yellow
 sdk: gradio
 sdk_version: 3.32.0
 app_file: app.py

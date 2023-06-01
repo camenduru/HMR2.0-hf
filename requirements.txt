@@ -1,0 +1,29 @@
+# torch
+# pytorch-lightning
+# smplx==0.1.28
+# pyrender
+# opencv-python
+# yacs
+# scikit-image
+# einops
+# timm
+# OmegaConf
+
+--extra-index-url https://download.pytorch.org/whl/cu116
+torch==1.13.1+cu116
+torchvision==0.14.1+cu116
+pytorch-lightning
+smplx==0.1.28
+opencv-python
+yacs
+scikit-image
+einops
+timm
+OmegaConf
+trimesh
+pyopengl==3.1.0
+pyglet
+PyOpenGL
+PyOpenGL_accelerate
+numpy==1.23.3
+shapely 
