@@ -141,11 +141,11 @@ with gr.Blocks(title="4DHumans", css=".gradio-container") as demo:
     gr.HTML("""<br/>""")
 
     with gr.Row():
-        threshold = gr.Slider(0, 1.0, value=0.8, label='Detection Threshold')
+        threshold = gr.Slider(0, 1.0, value=0.6, label='Detection Threshold')
         send_btn = gr.Button("Infer")
         send_btn.click(fn=infer, inputs=[input_image, threshold], outputs=[output_image])
 
-    # gr.Examples(['samples/img1.jpg', 'samples/img2.png', 'samples/img3.jpg', 'samples/img4.jpg'], inputs=input_image)
+    gr.Examples([['assets/test1.png', 0.6], ['assets/test2.png', 0.5]], inputs=[input_image, threshold])
 
     gr.HTML("""</ul>""")
 
