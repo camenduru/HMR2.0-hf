@@ -7,13 +7,24 @@ import gradio as gr
 import numpy as np
 import torch
 from PIL import Image
-
+os.system('pip install /home/user/app/vendor/pyrender')
+sys.path.append('/home/user/app/vendor/pyrender')
 from hmr2.configs import get_config
 from hmr2.datasets.vitdet_dataset import (DEFAULT_MEAN, DEFAULT_STD,
                                           ViTDetDataset)
 from hmr2.models import HMR2
 from hmr2.utils import recursive_to
 from hmr2.utils.renderer import Renderer, cam_crop_to_full
+
+os.environ["PYOPENGL_PLATFORM"] = "egl"
+os.environ["MESA_GL_VERSION_OVERRIDE"] = "4.1"
+
+try:
+    import detectron2
+except:
+    import os 
+    os.system('pip install git+https://github.com/facebookresearch/detectron2.git')
+
 
 # Setup HMR2.0 model
 LIGHT_BLUE=(0.65098039,  0.74117647,  0.85882353)

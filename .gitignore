@@ -1,5 +1,5 @@
 # Specific
-/logs*/
+/logs2/
 /results/
 /sandbox/
 *.lock
@@ -16,7 +16,7 @@ token_channel.csv
 __pycache__/
 *.py[cod]
 *$py.class
-logs/
+# logs/
 # C extensions
 *.so
 
