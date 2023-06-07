@@ -1,6 +1,3 @@
-import os
-os.environ["PYOPENGL_PLATFORM"] = "osmesa"
-
 import argparse
 import os
 from pathlib import Path
