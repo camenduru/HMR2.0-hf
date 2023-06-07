@@ -127,25 +127,25 @@ class OffscreenRenderer(object):
         gc.collect()
 
     def _create(self):
-        if 'PYOPENGL_PLATFORM' not in os.environ:
-            from pyrender.platforms.pyglet_platform import PygletPlatform
-            self._platform = PygletPlatform(self.viewport_width,
-                                            self.viewport_height)
-        elif os.environ['PYOPENGL_PLATFORM'] == 'egl':
-            from pyrender.platforms import egl
-            device_id = int(os.environ.get('EGL_DEVICE_ID', '0'))
-            egl_device = egl.get_device_by_index(device_id)
-            self._platform = egl.EGLPlatform(self.viewport_width,
-                                             self.viewport_height,
-                                             device=egl_device)
-        elif os.environ['PYOPENGL_PLATFORM'] == 'osmesa':
-            from pyrender.platforms.osmesa import OSMesaPlatform
-            self._platform = OSMesaPlatform(self.viewport_width,
-                                            self.viewport_height)
-        else:
-            raise ValueError('Unsupported PyOpenGL platform: {}'.format(
-                os.environ['PYOPENGL_PLATFORM']
-            ))
+        from pyrender.platforms.pyglet_platform import PygletPlatform
+        self._platform = PygletPlatform(self.viewport_width,
+                                        self.viewport_height)
+        # if 'PYOPENGL_PLATFORM' not in os.environ:
+        # elif os.environ['PYOPENGL_PLATFORM'] == 'egl':
+        #     from pyrender.platforms import egl
+        #     device_id = int(os.environ.get('EGL_DEVICE_ID', '0'))
+        #     egl_device = egl.get_device_by_index(device_id)
+        #     self._platform = egl.EGLPlatform(self.viewport_width,
+        #                                      self.viewport_height,
+        #                                      device=egl_device)
+        # elif os.environ['PYOPENGL_PLATFORM'] == 'osmesa':
+        #     from pyrender.platforms.osmesa import OSMesaPlatform
+        #     self._platform = OSMesaPlatform(self.viewport_width,
+        #                                     self.viewport_height)
+        # else:
+        #     raise ValueError('Unsupported PyOpenGL platform: {}'.format(
+        #         os.environ['PYOPENGL_PLATFORM']
+        #     ))
         self._platform.init_context()
         self._platform.make_current()
         self._renderer = Renderer(self.viewport_width, self.viewport_height)
