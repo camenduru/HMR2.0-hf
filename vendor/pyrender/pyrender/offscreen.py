@@ -127,6 +127,7 @@ class OffscreenRenderer(object):
         gc.collect()
 
     def _create(self):
+        os.environ['DISPLAY'] = ':1'
         from pyrender.platforms.pyglet_platform import PygletPlatform
         self._platform = PygletPlatform(self.viewport_width,
                                         self.viewport_height)
