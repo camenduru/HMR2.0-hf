@@ -127,11 +127,11 @@ class OffscreenRenderer(object):
         gc.collect()
 
     def _create(self):
-        import os
-        os.environ['DISPLAY'] = ':1'
-        from pyrender.platforms.pyglet_platform import PygletPlatform
-        self._platform = PygletPlatform(self.viewport_width,
-                                        self.viewport_height)
+        # import os
+        # os.environ['DISPLAY'] = ':1'
+        # from pyrender.platforms.pyglet_platform import PygletPlatform
+        # self._platform = PygletPlatform(self.viewport_width,
+        #                                 self.viewport_height)
         # if 'PYOPENGL_PLATFORM' not in os.environ:
         # elif os.environ['PYOPENGL_PLATFORM'] == 'egl':
         #     from pyrender.platforms import egl
@@ -141,9 +141,9 @@ class OffscreenRenderer(object):
         #                                      self.viewport_height,
         #                                      device=egl_device)
         # elif os.environ['PYOPENGL_PLATFORM'] == 'osmesa':
-        #     from pyrender.platforms.osmesa import OSMesaPlatform
-        #     self._platform = OSMesaPlatform(self.viewport_width,
-        #                                     self.viewport_height)
+        from pyrender.platforms.osmesa import OSMesaPlatform
+        self._platform = OSMesaPlatform(self.viewport_width,
+                                        self.viewport_height)
         # else:
         #     raise ValueError('Unsupported PyOpenGL platform: {}'.format(
         #         os.environ['PYOPENGL_PLATFORM']
