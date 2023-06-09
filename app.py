@@ -147,7 +147,10 @@ with gr.Blocks(title="4DHumans", css=".gradio-container") as demo:
 
     gr.Examples([
         ['assets/test1.png', 0.6], 
-        # ['assets/test2.png', 0.5]
+        ['assets/test2.jpg', 0.6], 
+        ['assets/test3.jpg', 0.6], 
+        ['assets/test4.jpg', 0.6], 
+        ['assets/test5.jpg', 0.6], 
         ], 
         inputs=[input_image, threshold])
 
