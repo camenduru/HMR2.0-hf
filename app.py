@@ -145,14 +145,23 @@ with gr.Blocks(title="4DHumans", css=".gradio-container") as demo:
         send_btn = gr.Button("Infer")
         send_btn.click(fn=infer, inputs=[input_image, threshold], outputs=[output_image])
 
+    # gr.Examples([
+    #     ['assets/test1.png', 0.6], 
+    #     ['assets/test2.jpg', 0.6], 
+    #     ['assets/test3.jpg', 0.6], 
+    #     ['assets/test4.jpg', 0.6], 
+    #     ['assets/test5.jpg', 0.6], 
+    #     ], 
+    #     inputs=[input_image, threshold])
+
     gr.Examples([
-        ['assets/test1.png', 0.6], 
-        ['assets/test2.jpg', 0.6], 
-        ['assets/test3.jpg', 0.6], 
-        ['assets/test4.jpg', 0.6], 
-        ['assets/test5.jpg', 0.6], 
+        ['assets/test1.png'], 
+        ['assets/test2.jpg'], 
+        ['assets/test3.jpg'], 
+        ['assets/test4.jpg'], 
+        ['assets/test5.jpg'], 
         ], 
-        inputs=[input_image, threshold])
+        inputs=[input_image, 0.6])
 
     gr.HTML("""</ul>""")
 
