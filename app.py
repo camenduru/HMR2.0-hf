@@ -94,13 +94,6 @@ def infer(in_pil_img, in_threshold=0.8, out_pil_img=None):
             input_patch = batch['img'][n].cpu() * (DEFAULT_STD[:,None,None]/255) + (DEFAULT_MEAN[:,None,None]/255)
             input_patch = input_patch.permute(1,2,0).numpy()
 
-            regression_img = renderer(out['pred_vertices'][n].detach().cpu().numpy(),
-                                    out['pred_cam_t'][n].detach().cpu().numpy(),
-                                    batch['img'][n],
-                                    mesh_base_color=LIGHT_BLUE,
-                                    scene_bg_color=(1, 1, 1),
-                                    )
-
 
             verts = out['pred_vertices'][n].detach().cpu().numpy()
             cam_t = pred_cam_t[n]
