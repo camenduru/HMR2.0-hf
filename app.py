@@ -1,6 +1,7 @@
 import argparse
 import os
 from pathlib import Path
+import tempfile
 import sys
 import cv2
 import gradio as gr
@@ -25,6 +26,8 @@ except:
     import os 
     os.system('pip install git+https://github.com/facebookresearch/detectron2.git')
 
+OUT_FOLDER = 'demo_out'
+os.makedirs(OUT_FOLDER, exist_ok=True)
 
 # Setup HMR2.0 model
 LIGHT_BLUE=(0.65098039,  0.74117647,  0.85882353)
@@ -71,7 +74,10 @@ def infer(in_pil_img, in_threshold=0.8, out_pil_img=None):
 
     all_verts = []
     all_cam_t = []
+    all_mesh_paths = []
 
+    temp_name = next(tempfile._get_candidate_names())
+    
     for batch in dataloader:
         batch = recursive_to(batch, device)
         with torch.no_grad():
@@ -101,6 +107,15 @@ def infer(in_pil_img, in_threshold=0.8, out_pil_img=None):
             all_verts.append(verts)
             all_cam_t.append(cam_t)
 
+            # Save all meshes to disk
+            # if args.save_mesh:
+            if True:
+                camera_translation = cam_t.copy()
+                tmesh = renderer.vertices_to_trimesh(verts, camera_translation, LIGHT_BLUE)
+
+                temp_path = os.path.join(f'{OUT_FOLDER}/{temp_name}_{person_id}.obj')
+                tmesh.export(temp_path)
+                all_mesh_paths.append(temp_path)
 
     # Render front view
     if len(all_verts) > 0:
@@ -118,9 +133,9 @@ def infer(in_pil_img, in_threshold=0.8, out_pil_img=None):
         # convert to PIL image
         out_pil_img =  Image.fromarray((input_img_overlay*255).astype(np.uint8))
 
-        return out_pil_img
+        return out_pil_img, all_mesh_paths
     else:
-        return None
+        return None, []
 
 
 with gr.Blocks(title="4DHumans", css=".gradio-container") as demo:
@@ -128,15 +143,18 @@ with gr.Blocks(title="4DHumans", css=".gradio-container") as demo:
     gr.HTML("""<div style="font-weight:bold; text-align:center; color:royalblue;">HMR 2.0</div>""")
 
     with gr.Row():
-        input_image = gr.Image(label="Input image", type="pil", width=300, height=300, fixed_size=True)
-        output_image = gr.Image(label="Reconstructions", type="pil", width=300, height=300, fixed_size=True)
+        with gr.Column():
+            input_image = gr.Image(label="Input image", type="pil")
+        with gr.Column():
+            output_image = gr.Image(label="Reconstructions", type="pil")
+            output_meshes = gr.File(label="3D meshes")
 
     gr.HTML("""<br/>""")
 
     with gr.Row():
         threshold = gr.Slider(0, 1.0, value=0.6, label='Detection Threshold')
         send_btn = gr.Button("Infer")
-        send_btn.click(fn=infer, inputs=[input_image, threshold], outputs=[output_image])
+        send_btn.click(fn=infer, inputs=[input_image, threshold], outputs=[output_image, output_meshes])
 
     # gr.Examples([
     #     ['assets/test1.png', 0.6], 
@@ -155,9 +173,6 @@ with gr.Blocks(title="4DHumans", css=".gradio-container") as demo:
         ['assets/test5.jpg'], 
         ], 
         inputs=[input_image, 0.6])
-
-    gr.HTML("""</ul>""")
-
 
 
 #demo.queue()
