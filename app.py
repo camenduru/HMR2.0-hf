@@ -8,8 +8,8 @@ import gradio as gr
 import numpy as np
 import torch
 from PIL import Image
-os.system('pip install /home/user/app/vendor/pyrender')
-sys.path.append('/home/user/app/vendor/pyrender')
+# os.system('pip install /home/user/app/vendor/pyrender')
+# sys.path.append('/home/user/app/vendor/pyrender')
 from hmr2.configs import get_config
 from hmr2.datasets.vitdet_dataset import (DEFAULT_MEAN, DEFAULT_STD,
                                           ViTDetDataset)
