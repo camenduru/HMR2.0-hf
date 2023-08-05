@@ -176,7 +176,7 @@ with gr.Blocks(title="4DHumans", css=".gradio-container") as demo:
 
 
 #demo.queue()
-demo.launch(debug=True)
+demo.launch(debug=True, share=True)
 
 
 
